@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mobile Fighter - 1v1 Weapon Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <header>
+            <h1>🗡️ Mobile Fighter 🛡️</h1>
+            <div id="gameStats">
+                <div id="player1Stats">
+                    <span>Player 1</span>
+                    <div class="health-bar">
+                        <div id="player1Health" class="health-fill"></div>
+                    </div>
+                    <span id="player1Weapon">⚔️ Schwert</span>
+                </div>
+                <div id="player2Stats">
+                    <span>Player 2</span>
+                    <div class="health-bar">
+                        <div id="player2Health" class="health-fill"></div>
+                    </div>
+                    <span id="player2Weapon">🏹 Bogen</span>
+                </div>
+            </div>
+        </header>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="gameControls">
+            <div id="player1Controls" class="control-panel">
+                <h3>Spieler 1</h3>
+                <div class="controls-grid">
+                    <button class="control-btn" data-action="moveLeft" data-player="1">⬅️</button>
+                    <button class="control-btn" data-action="moveUp" data-player="1">⬆️</button>
+                    <button class="control-btn" data-action="moveRight" data-player="1">➡️</button>
+                    <button class="control-btn" data-action="moveDown" data-player="1">⬇️</button>
+                    <button class="control-btn attack-btn" data-action="attack" data-player="1">🗡️ Angriff</button>
+                    <button class="control-btn weapon-btn" data-action="switchWeapon" data-player="1">🔄 Waffe</button>
+                </div>
+            </div>
+
+            <div id="player2Controls" class="control-panel">
+                <h3>Spieler 2</h3>
+                <div class="controls-grid">
+                    <button class="control-btn" data-action="moveLeft" data-player="2">⬅️</button>
+                    <button class="control-btn" data-action="moveUp" data-player="2">⬆️</button>
+                    <button class="control-btn" data-action="moveRight" data-player="2">➡️</button>
+                    <button class="control-btn" data-action="moveDown" data-player="2">⬇️</button>
+                    <button class="control-btn attack-btn" data-action="attack" data-player="2">🏹 Angriff</button>
+                    <button class="control-btn weapon-btn" data-action="switchWeapon" data-player="2">🔄 Waffe</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameMenu" class="hidden">
+            <div class="menu-content">
+                <h2 id="gameResult"></h2>
+                <button id="restartBtn" class="menu-btn">🔄 Neues Spiel</button>
+                <button id="weaponSelectBtn" class="menu-btn">⚔️ Waffen auswählen</button>
+            </div>
+        </div>
+
+        <div id="weaponMenu" class="hidden">
+            <div class="menu-content">
+                <h2>Waffen auswählen</h2>
+                <div class="weapon-grid">
+                    <div class="weapon-option" data-weapon="sword">
+                        <span>⚔️</span>
+                        <p>Schwert</p>
+                        <small>Schnell, mittlerer Schaden</small>
+                    </div>
+                    <div class="weapon-option" data-weapon="bow">
+                        <span>🏹</span>
+                        <p>Bogen</p>
+                        <small>Fernkampf, geringer Schaden</small>
+                    </div>
+                    <div class="weapon-option" data-weapon="axe">
+                        <span>🪓</span>
+                        <p>Axt</p>
+                        <small>Langsam, hoher Schaden</small>
+                    </div>
+                    <div class="weapon-option" data-weapon="dagger">
+                        <span>🗡️</span>
+                        <p>Dolch</p>
+                        <small>Sehr schnell, geringer Schaden</small>
+                    </div>
+                </div>
+                <button id="closeWeaponMenu" class="menu-btn">✅ Bestätigen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

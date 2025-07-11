@@ -1,0 +1,343 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: white;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+#gameContainer {
+    max-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #ffd700;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#gameStats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+#player1Stats, #player2Stats {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.health-bar {
+    width: 100%;
+    max-width: 150px;
+    height: 20px;
+    background: rgba(255, 0, 0, 0.3);
+    border: 2px solid #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.health-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff4444, #ffaa00, #44ff44);
+    transition: width 0.3s ease;
+}
+
+#gameCanvas {
+    flex: 1;
+    background: linear-gradient(45deg, #2c5234 0%, #4a7c59 50%, #2c5234 100%);
+    border: 3px solid #ffd700;
+    margin: 10px;
+    border-radius: 10px;
+    min-height: 300px;
+    max-height: 400px;
+    display: block;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+#gameControls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.control-panel {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.control-panel h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #ffd700;
+    font-size: 1.1rem;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.control-btn {
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+    background: linear-gradient(145deg, #5a6fd8 0%, #6a4190 100%);
+    border-color: #ffd700;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.attack-btn {
+    background: linear-gradient(145deg, #ff6b6b 0%, #ee5a24 100%);
+    grid-column: span 2;
+}
+
+.attack-btn:active {
+    background: linear-gradient(145deg, #e55555 0%, #d4461e 100%);
+}
+
+.weapon-btn {
+    background: linear-gradient(145deg, #ffa726 0%, #f57c00 100%);
+    grid-column: span 1;
+}
+
+.weapon-btn:active {
+    background: linear-gradient(145deg, #ff9800 0%, #e65100 100%);
+}
+
+.hidden {
+    display: none !important;
+}
+
+#gameMenu, #weaponMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.menu-content {
+    background: linear-gradient(145deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    border: 3px solid #ffd700;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.menu-content h2 {
+    margin-bottom: 20px;
+    color: #ffd700;
+    font-size: 1.5rem;
+}
+
+.menu-btn {
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 15px 25px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    min-width: 200px;
+}
+
+.menu-btn:hover, .menu-btn:active {
+    transform: scale(0.98);
+    border-color: #ffd700;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.weapon-option {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-align: center;
+}
+
+.weapon-option:hover, .weapon-option.selected {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+    transform: scale(1.05);
+}
+
+.weapon-option span {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.weapon-option p {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffd700;
+}
+
+.weapon-option small {
+    color: #ccc;
+    font-size: 0.8rem;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    #gameStats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #player1Stats, #player2Stats {
+        width: 100%;
+    }
+    
+    #gameControls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .controls-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
+    .control-btn {
+        font-size: 0.9rem;
+        padding: 10px 6px;
+        min-height: 45px;
+    }
+    
+    .weapon-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .control-btn {
+        font-size: 0.8rem;
+        padding: 8px 4px;
+        min-height: 40px;
+    }
+    
+    .menu-content {
+        padding: 20px;
+    }
+    
+    .weapon-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Touch feedback */
+.control-btn:active,
+.weapon-option:active,
+.menu-btn:active {
+    background-color: rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Prevent zooming on double tap */
+.control-btn, .weapon-option, .menu-btn {
+    touch-action: manipulation;
+}
+
+/* Animation for game elements */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.attacking {
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Game canvas responsive sizing */
+#gameCanvas {
+    width: calc(100vw - 20px);
+    height: auto;
+    aspect-ratio: 4/3;
+}
